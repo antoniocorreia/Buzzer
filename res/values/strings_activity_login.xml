@@ -1,0 +1,24 @@
+<resources>
+
+    <string name="title_activity_login">Cadastro</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_username">seu nome</string>
+    <string name="prompt_password">sua senha</string>
+    <string name="prompt_password_again">sua senha novamente</string>
+    <string name="action_sign_in_register"><b>Logar</b> ou cadastrar</string>
+    <string name="action_sign_in_short">Logar</string>
+    <string name="action_forgot_password">Recuperar senha</string>
+    <string name="login_progress_signing_in">Logando em&#8230;</string>
+    <string name="error_invalid_email">Esse endereço de email é inválido</string>
+    <string name="error_invalid_password">A senha é muito curta</string>
+    <string name="error_incorrect_password">A senha está incorreta</string>
+    <string name="error_field_required">Este campo é obrigatório</string>
+    <string name="error_intro">"Por favor "</string>
+    <string name="error_blank_username">entre com seu nome de usuário</string>
+    <string name="error_blank_password">entre com sua senha</string>
+    <string name="error_mismatched_passwords">digite a mesma senha duas vezes</string>
+    <string name="error_join">", e "</string>
+    <string name="error_end">.</string>
+
+</resources>

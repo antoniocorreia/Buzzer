@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textViewTipo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1" >
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="selecionarData"
+                    android:text="@string/data"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/hora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="setHora"
+                    android:text="@string/hora"
+                    android:textColor="#FFFFFF" />
+
+            </TableRow>
+        </TableLayout>
+
+        
+
+        <CheckBox
+                android:id="@+id/checkLocalizacaoAtual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/minha_localizacao"
+                android:onClick="clickLocalizacaoAtual"
+                android:textColor="#FFFFFF" />
+        <TextView
+            android:id="@+id/colocarlocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/local"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FFFFFF" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/local"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/procura"
+                android:ems="10"
+                android:inputType="text"
+                android:textColor="#FFFFFF" >
+
+                <requestFocus />
+            </EditText>
+
+            <Button
+                android:id="@+id/procura"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/button_search"
+                android:onClick="procuraLugar" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/comentarioOc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detalhes"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FFFFFF" />
+
+        <EditText
+            android:id="@+id/comentario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:textColor="#FFFFFF" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/finalizarAlerta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="returnToMain"
+            android:text="@string/cadastrar"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</LinearLayout>

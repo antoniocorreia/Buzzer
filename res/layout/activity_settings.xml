@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android1="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/plano"
+    android:gravity="center_vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".SettingsActivity" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/raio_alerta"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/searchDistanceGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1" >
+
+        <RadioButton
+            android:id="@+id/feet250Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/feet_250" />
+
+        <RadioButton
+            android:id="@+id/feet1000Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/feet_1000" />
+
+        <RadioButton
+            android:id="@+id/feet4000Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/feet_4000" />
+    </RadioGroup>
+
+    <Switch
+        android:id="@+id/switchAlertaSonoro"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/searchDistanceGroup"
+        android:layout_marginTop="37dp"
+        android:text="@string/alerta_sonoro" />
+
+    <Switch
+        android:id="@+id/switchAlertaVibratorio"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/searchDistanceGroup"
+        android:layout_below="@+id/searchDistanceGroup"
+        android:layout_marginTop="86dp"
+        android:text="@string/alerta_vibratorio" />
+
+    <Button
+        android:id="@+id/voltarButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/switchAlertaVibratorio"
+        android:layout_below="@+id/switchAlertaVibratorio"
+        android:layout_marginTop="30dp"
+        android:text="@string/voltar" />
+
+</RelativeLayout>

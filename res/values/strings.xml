@@ -1,0 +1,73 @@
+<resources>
+
+    <string name="app_name">Buzzer</string>
+    <string name="action_settings">Configurações</string>
+    <string name="title_activity_sign_up_or_log_in">SignUpOrLogInActivity</string>
+    <string name="log_in">Logar</string>
+    <string name="sign_up">Cadastrar</string>
+    <string name="powered_by">Desenvolvido por</string>
+    <string name="parse">Buzzer Company - CIn/UFPE</string>
+    <string name="slogan">Fique alerta, fuja dessa roubada</string>
+    <string name="title_activity_settings">Configurações</string>
+    <string name="feet_250">75 metros</string>
+    <string name="feet_1000">300 metros</string>
+    <string name="feet_4000">1 quilômetro</string>
+    <string name="search_distance">Buscar Distância</string>
+    <string name="log_out">Sair do Buzzer</string>
+    <string name="post">Alertar uma ocorrência</string>
+    <string name="post_out_of_range">Não se pode ver uma ocorrência, chegue mais perto.</string>
+	
+	<!--     activity_main -->
+    <string name="ocurrenceBtn_contentDescription">Registrar ocorrência</string>
+    
+    	<!-- 	activity_settings -->
+	<string name="alerta_sonoro">Alerta sonoro</string>
+	<string name="alerta_vibratorio">Alerta vibratório</string>
+	<string name="voltar">Voltar</string>
+	<string name="raio_alerta">Raio de alerta</string>
+	
+	<!-- 	Facebook -->
+	<string name="app_id">403756553099033</string>
+	
+	<!--     activity_sign_up_or_log_in.xml -->
+    <string name="usuario">Usuário:</string>
+    <string name="senha">Senha:</string>
+    <string name="confirmar_senha">Confirmar senha:</string>
+    <string name="entrar">Entrar</string>
+    <string name="email">E-mail:</string>
+    <string name="cadastro">Cadastrar-se</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="manter_conectado">Entrar</string>
+    <string name="esqueceu_senha">Esqueceu a senha?</string>
+    <string name="logo">Logomarca do Buzzer</string>
+    <string name="mensagem_erro_conf_senha">Senhas não conferem</string>
+    <string name="cadastro_erro">Erro no cadastro</string>
+    <string name="login_erro">Erro no login</string>
+    <string name="entrar_facebook">Entrar com facebook</string>
+    <string name="mensagem_erro_campos_cadastro">Preencha os campos de usuário, e-mail e senha.</string>
+    <string name="ou">ou</string>
+    <string name="login_normal">Já possui login? Entre aqui!</string>
+    <string name="login">Log In</string>
+    
+    <!--     activity_recuperar_senha -->
+	<string name="recuperar">Recuperar senha</string>
+	<string name="email_enviado">Foi enviado um e-mail com as instruções para resetar a senha</string>
+   
+	<!-- activity_occurrence_type -->
+	<string name="assalto">Assalto</string>
+	<string name="furto">Furto</string>
+	<string name="tumulto">Tumulto</string>
+	<string name="outros">Outros</string>
+	<string name="contentDescription">Imagens de tipo de ocorrência</string>
+	
+	<!-- activity_ocorrencia_detalhes -->
+	<string name="detalhes">Detalhes</string>
+	<string name="local">Local</string>
+	<string name="agora">Foi agora</string>
+	<string name="minha_localizacao">Utilizar localização atual</string>
+	<string name="data">Data</string>
+	<string name="hora">Hora</string>
+	
+	<!-- activity_lista_lugares -->
+	<string name="warning">Nenhum lugar com essa descrição</string>
+</resources>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#333333"
+    android:gravity="center_vertical"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/back" >
+
+        <ImageButton
+            android:id="@+id/novo_assalto"
+            android:contentDescription="@string/contentDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="80dp"
+            android:clickable="true"
+            android:background="@drawable/button_assalto"
+            android:onClick="selecionarOpcao"
+            android:text="@string/assalto"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/novo_furto"
+            android:contentDescription="@string/contentDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/novo_assalto"
+            android:layout_marginRight="30dp"
+            android:clickable="true"
+            android:background="@drawable/button_furto"
+            android:onClick="selecionarOpcao"
+            android:text="@string/furto"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/novo_tumulto"
+            android:contentDescription="@string/contentDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/novo_assalto"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="120dp"
+            android:clickable="true"
+            android:background="@drawable/button_tumulto"
+            android:onClick="selecionarOpcao"
+            android:text="@string/tumulto"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/novo_outros"
+            android:contentDescription="@string/contentDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/novo_tumulto"
+            android:layout_alignRight="@id/novo_furto"
+            android:clickable="true"
+            android:background="@drawable/button_outro"
+            android:onClick="selecionarOpcao"
+            android:text="@string/outros"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</LinearLayout>
