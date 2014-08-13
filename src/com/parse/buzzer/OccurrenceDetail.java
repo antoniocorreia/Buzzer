@@ -204,6 +204,16 @@ public class OccurrenceDetail extends Activity {
 					.append(":").append(pad(min)));
 		}
 	}
+	
+	private void atualizaTipo(){
+		tipo = (TextView) findViewById(R.id.textViewTipo);
+		//tipo passado da OccurrenceTypeActivity
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			String tipoOcorrencia = extras.getString("Tipo");
+			tipo.setText(tipoOcorrencia);
+		}
+	}
 
 	// pega o endereco escolhido da lista de enderecos possiveis, e seta
 	// novamente a tela de detalhes.
@@ -222,6 +232,7 @@ public class OccurrenceDetail extends Activity {
 
 			setContentView(R.layout.activity_ocorrencia_detalhes);
 			atualizaHoraData();
+			atualizaTipo();
 			EditText endereco = (EditText) findViewById(R.id.local);
 
 			for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {

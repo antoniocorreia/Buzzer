@@ -165,6 +165,48 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 		radius = Application.getSearchDistance();
 		lastRadius = radius;
 		setContentView(R.layout.activity_main);
+		
+		//checa se GPS do usuário está ligado
+		String provider = android.provider.Settings.Secure.getString(
+				getContentResolver(),
+				android.provider.Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+		if (!provider.contains("gps")) { 
+			 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+		     
+			 alertDialogBuilder.setTitle("GPS desativado!");
+			 alertDialogBuilder.setMessage("Para funcionamento correto o Buzzer precisa que você ative o GPS. Deseja fazer isso agora?");
+			 // set positive button: Yes message
+			 alertDialogBuilder.setPositiveButton("Sim",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						// go to a new activity of the app
+						Intent i = new
+						Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+						startActivity(i);	
+					}
+				  });
+			 // set negative button: No message
+			 alertDialogBuilder.setNegativeButton("Não",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						// cancel the alert box and put a Toast to the user
+						dialog.cancel();
+						Toast.makeText(getApplicationContext(), "Por favor, ative o GPS.", 
+								Toast.LENGTH_LONG).show();
+					}
+				});
+			 // set neutral button: Exit the app message
+			 alertDialogBuilder.setNeutralButton("Sair do Buzzer",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						// exit the app and go to the HOME
+						MainActivity.this.finish();
+					}
+				});
+			 
+			 AlertDialog alertDialog = alertDialogBuilder.create();
+			 // show alert
+			 alertDialog.show();
+	 
+			
+		}
 
 		// Track app opens.
 		ParseAnalytics.trackAppOpened(getIntent());
@@ -220,7 +262,7 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 				TextView usernameView = (TextView) view
 						.findViewById(R.id.usernameView);
 				contentView.setText(occurrence.getText());
-				usernameView.setText(occurrence.getUser().getUsername());
+				usernameView.setText(occurrence.getUser().getUsername()); //ToDo: verificar o que isso afeta, eu (Antonio) mudei por conta de um NullPointerException
 				return view;
 			}
 		};
@@ -672,11 +714,14 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 								oldMarker.remove();
 							}
 						}
+						
+						
 						// mostra um pino verde pra uma ocorrÃªncia que foi
 						// colocada pelo usuÃ¡rio
+						
 						markerOpts = markerOpts
-								.title(post.getText())
-								.snippet(post.getUser().getUsername())
+								.title(post.getTipo())
+								.snippet(post.getText())
 								.icon(BitmapDescriptorFactory
 										.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 

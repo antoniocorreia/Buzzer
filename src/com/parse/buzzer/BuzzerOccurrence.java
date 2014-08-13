@@ -37,6 +37,10 @@ public class BuzzerOccurrence extends ParseObject {
 	  public void setTipo(String value){
 		  put("Tipo",value);
 	  }
+	  
+	  public String getTipo(){
+		  return getString("Tipo");
+	  }
 
 	  public static ParseQuery<BuzzerOccurrence> getQuery() {
 	    return ParseQuery.getQuery(BuzzerOccurrence.class);

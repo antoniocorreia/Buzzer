@@ -202,6 +202,7 @@ int drawable lupa 0x7f020068
 int drawable plano 0x7f020069
 int drawable powered_by_google_dark 0x7f02006a
 int drawable powered_by_google_light 0x7f02006b
+int drawable warning 0x7f02006c
 int id RelativeLayout1 0x7f05004b
 int id a0 0x7f050016
 int id a1 0x7f050017
