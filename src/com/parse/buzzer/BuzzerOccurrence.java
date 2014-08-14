@@ -1,4 +1,6 @@
 package com.parse.buzzer;
+import java.util.Date;
+
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -41,7 +43,15 @@ public class BuzzerOccurrence extends ParseObject {
 	  public String getTipo(){
 		  return getString("Tipo");
 	  }
-
+	  
+	  public void setData(Date value){
+		  put("Data",value);
+	  }
+	  
+	  public void setHora(String value){
+		put("Hora",value);  
+	  }
+	  
 	  public static ParseQuery<BuzzerOccurrence> getQuery() {
 	    return ParseQuery.getQuery(BuzzerOccurrence.class);
 	  }

@@ -1,7 +1,10 @@
 package com.parse.buzzer;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -114,13 +117,27 @@ public class OccurrenceDetail extends Activity {
 	}
 
 	// a funcao cadastra a ocorrencia no parse, e retorna para a tela principal
-	public void returnToMain(View view) {
+	public void returnToMain(View view) throws java.text.ParseException {
 		if (occurrence.getLocation() != null) { // checa se a posicao foi colocada
 			String comentario = "";
 			EditText comentarioTextBox = (EditText) findViewById(R.id.comentario);
 			comentario = comentario + comentarioTextBox.getText().toString();
 			occurrence.setText(comentario);
 			occurrence.setTipo(tipo.getText().toString().trim());
+			
+			//data
+			botaoData = (Button) findViewById(R.id.data);
+			
+			DateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+			Date date = (Date)formatter.parse(botaoData.getText().toString());
+
+			occurrence.setData(date);
+			
+			//hora
+			botaoHora = (Button) findViewById(R.id.hora);
+			occurrence.setHora(botaoHora.getText().toString());
+			
+						
 			ParseACL acl = new ParseACL();
 			// permite public read access
 			acl.setPublicReadAccess(true);
@@ -132,9 +149,14 @@ public class OccurrenceDetail extends Activity {
 
 				}
 			});
+			
+			
+			
 			Intent intent = new Intent(OccurrenceDetail.this,DispatchActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK	| Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
+			
+			Toast.makeText(OccurrenceDetail.this,"Ocorrência cadastrada com sucesso!", Toast.LENGTH_LONG).show();
 		} else {
 			Toast.makeText(OccurrenceDetail.this,"Digite o local da ocorrência", Toast.LENGTH_LONG).show();
 		}

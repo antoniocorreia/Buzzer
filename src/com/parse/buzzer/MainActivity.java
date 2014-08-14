@@ -40,7 +40,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.CancelableCallback;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -570,10 +572,18 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 				location.getLongitude());
 		if (!hasSetUpInitialLocation) {
 			// Zoom pra localizaÃ§Ã£o atual
+			CameraUpdate center = CameraUpdateFactory.newLatLng(myLatLng);
+			map.getMap().moveCamera(center);
 			updateZoom(myLatLng);
 			hasSetUpInitialLocation = true;
 		}
+		
+		//move mapa - falta testar em movimentação
+		
+		
+		
 		// atualiza o indicador do raio do mapa
+		
 		updateCircle(myLatLng);
 		doMapQuery();
 		doListQuery();
