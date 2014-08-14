@@ -83,8 +83,7 @@ public class LoginActivity extends Activity{
 		LoginActivity.this.progressDialog = ProgressDialog.show(
 				LoginActivity.this, "", "Entrando...", true);
 		
-		List<String> permissions = Arrays.asList("basic_info", "user_about_me",
-				"user_birthday", "user_location");
+		List<String> permissions = Arrays.asList("basic_info","user_birthday", "user_location"); //ToDo: conferir, no meu esta dando invalid app_id e no de bruno erro na permission, tem que setar para public_profile
 		ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
 			@Override
 			public void done(ParseUser user, ParseException err) {

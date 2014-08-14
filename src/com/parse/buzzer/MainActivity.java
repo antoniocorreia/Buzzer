@@ -711,7 +711,7 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 								.title(getResources().getString(
 										R.string.post_out_of_range))
 								.icon(BitmapDescriptorFactory
-										.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+										.fromResource(R.drawable.markeroutros));
 					} else {
 						// verifica se tem algum pino no range
 						if (oldMarker != null) {
@@ -733,7 +733,8 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 								.title(post.getTipo())
 								.snippet(post.getText())
 								.icon(BitmapDescriptorFactory
-										.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+										.fromResource(R.drawable.markerraioazul));
+										//.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
 					}
 					// adiciona um novo pino
@@ -811,7 +812,7 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 				// pelo proprio usuario.
 				if (marker.getSnippet() != null
 						&& !alreadyAlerted.contains(tuple.getKey()))
-					if (!(marker.getSnippet().equals(ParseUser.getCurrentUser()
+					if (!(marker.getSnippet().equals(ParseUser.getCurrentUser() //ToDo: corrigir isso, pois snippet não será usuário
 							.getUsername()))
 							&& (radius * METERS_PER_FEET) >= haversine(
 									myLatLng.latitude, myLatLng.longitude,
@@ -823,6 +824,9 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 							break; // definir dps o numero de ocorrencia
 									// considerado
 									// perigoso.
+						//ou alertar caso exista alguma ocorrência no raio (pensar em exibir apenas aquelas
+						//que foram de ocorrências no turno que o usuário está
+						
 					}
 			}
 			// caso as ocorrencias forem maior que um numero min de ocorrencias
@@ -836,9 +840,10 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 				long[] pattern = { 0, 400, 1000 };
 				vibrator.vibrate(pattern, 0);
 
-				AlertDialog.Builder alert = new AlertDialog.Builder(
-						MainActivity.this);
-				alert.setTitle("Fique Ligado!!");
+				AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+				alert.setMessage("Área com "+ countOcc +" ocorrência(s) registrada(s) no último mês.");
+				alert.setTitle("Fique Alerta!");
+				alert.setIcon(R.drawable.ic_alert_dialog);
 				alert.setPositiveButton("Ok",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
@@ -847,6 +852,7 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 								vibrator.cancel();
 							}
 						});
+				alert.setCancelable(false);
 				alert.create().show();
 			}
 		}
