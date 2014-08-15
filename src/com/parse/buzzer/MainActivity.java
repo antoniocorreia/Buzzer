@@ -582,11 +582,10 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 		if (!hasSetUpInitialLocation) {
 
 			//move mapa - falta testar em movimenta��o
-			CameraUpdate center = CameraUpdateFactory.newLatLng(myLatLng);
-			map.getMap().moveCamera(center);
+			//CameraUpdate center = CameraUpdateFactory.newLatLng(myLatLng);
+			//map.getMap().moveCamera(center);
 			// Zoom pra localização atual			
 			updateZoom(myLatLng);
-
 			hasSetUpInitialLocation = true;
 		}
 
@@ -892,11 +891,20 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 	 * raio
 	 */
 	private void updateZoom(LatLng myLatLng) {
-		// pega os limites do zoom
-		LatLngBounds bounds = calculateBoundsWithCenter(myLatLng);
-		// dá um zoom pra os limites do mapa
-		map.getMap().animateCamera(
-				CameraUpdateFactory.newLatLngBounds(bounds, 5));
+//		// pega os limites do zoom
+//		LatLngBounds bounds = calculateBoundsWithCenter(myLatLng);
+//		// dá um zoom pra os limites do mapa
+//		map.getMap().animateCamera(
+//				CameraUpdateFactory.newLatLngBounds(bounds, 5));
+//		
+		
+		CameraPosition cameraPosition = new CameraPosition.Builder()
+	    	.target(myLatLng)      // Sets the center of the map to Mountain View
+	    	.zoom(17)                   // Sets the zoom
+	    	.bearing(90)                // Sets the orientation of the camera to east
+	    	.tilt(30)                   // Sets the tilt of the camera to 30 degrees
+	    	.build();                   // Creates a CameraPosition from the builder
+		map.getMap().animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 	}
 
 	/*
@@ -998,7 +1006,7 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 				SettingsActivity.class));
 	}
 	public void route(View v){
-
+		startActivity(new Intent(MainActivity.this,RouteActivity.class));
 	}
 	/*
 	 * mostra um dialog retornado pelo Google Play services pelo erro na

@@ -117,6 +117,11 @@ Google Maps Android API v2, but is recommended.
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarStyle" >
         </activity>
+         <activity
+            android:name="com.parse.buzzer.RouteActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
 
         <!-- LOGIN FACEBOOK -->
         <activity
