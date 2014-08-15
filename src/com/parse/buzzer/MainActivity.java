@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
@@ -63,8 +64,8 @@ import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
 public class MainActivity extends FragmentActivity implements LocationListener,
-		GooglePlayServicesClient.ConnectionCallbacks,
-		GooglePlayServicesClient.OnConnectionFailedListener {
+GooglePlayServicesClient.ConnectionCallbacks,
+GooglePlayServicesClient.OnConnectionFailedListener {
 
 	/*
 	 * define um request code pra enviar pro Google Play, esse c√≥digo √©
@@ -130,18 +131,18 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 	// campos pra ajudar o processamento do mapa e as mudan√ßas de local
 	private final Map<String, Marker> mapMarkers = new HashMap<String, Marker>();
 	static final LinkedList<String> alreadyAlerted = new LinkedList<String>();; // pinos
-																				// que
-																				// j·
-																				// foram
-																				// alertados
-																				// ao
-																				// usu·rio.
+	// que
+	// j·
+	// foram
+	// alertados
+	// ao
+	// usu·rio.
 	private int mostRecentMapUpdate = 0; // esta como static somente pq o botao
-											// de sair ainda nao foi
+	// de sair ainda nao foi
 	private boolean hasSetUpInitialLocation = false; // definido. Como static o
-														// botao atual pode
-														// enxergar essa lista e
-														// apaga-la.
+	// botao atual pode
+	// enxergar essa lista e
+	// apaga-la.
 	private String selectedObjectId;
 	private Location lastLocation = null;
 	private Location currentLocation = null;
@@ -159,7 +160,7 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 	Vibrator vibrator;
 	MediaPlayer mp;
 	int numMaxOcc = 0; // numero max de ocorrencias dentro de um raio para ser
-						// considerado um alerta.
+	// considerado um alerta.
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -167,52 +168,55 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 		radius = Application.getSearchDistance();
 		lastRadius = radius;
 		setContentView(R.layout.activity_main);
-		
+
+		//manter tela ligada
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
 		//checa se GPS do usu·rio est· ligado
 		String provider = android.provider.Settings.Secure.getString(
 				getContentResolver(),
 				android.provider.Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
 		if (!provider.contains("gps")) { 
-			 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-		     
-			 alertDialogBuilder.setTitle("GPS desativado!");
-			 alertDialogBuilder.setMessage("Para funcionamento correto o Buzzer precisa que vocÍ ative o GPS. Deseja fazer isso agora?");
-			 // set positive button: Yes message
-			 alertDialogBuilder.setPositiveButton("Sim",new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,int id) {
-						// go to a new activity of the app
-						Intent i = new
-						Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-						startActivity(i);	
-					}
-				  });
-			 // set negative button: No message
-			 alertDialogBuilder.setNegativeButton("N„o",new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,int id) {
-						// cancel the alert box and put a Toast to the user
-						dialog.cancel();
-						Toast.makeText(getApplicationContext(), "Por favor, ative o GPS.", 
-								Toast.LENGTH_LONG).show();
-					}
-				});
-			 // set neutral button: Exit the app message
-			 alertDialogBuilder.setNeutralButton("Sair do Buzzer",new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,int id) {
-						// exit the app and go to the HOME
-						MainActivity.this.finish();
-					}
-				});
-			 
-			 AlertDialog alertDialog = alertDialogBuilder.create();
-			 // show alert
-			 alertDialog.show();
-	 
-			
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+
+			alertDialogBuilder.setTitle("GPS desativado!");
+			alertDialogBuilder.setMessage("Para funcionamento correto o Buzzer precisa que vocÍ ative o GPS. Deseja fazer isso agora?");
+			// set positive button: Yes message
+			alertDialogBuilder.setPositiveButton("Sim",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,int id) {
+					// go to a new activity of the app
+					Intent i = new
+							Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					startActivity(i);	
+				}
+			});
+			// set negative button: No message
+			alertDialogBuilder.setNegativeButton("N„o",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,int id) {
+					// cancel the alert box and put a Toast to the user
+					dialog.cancel();
+					Toast.makeText(getApplicationContext(), "Por favor, ative o GPS.", 
+							Toast.LENGTH_LONG).show();
+				}
+			});
+			// set neutral button: Exit the app message
+			alertDialogBuilder.setNeutralButton("Sair do Buzzer",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,int id) {
+					// exit the app and go to the HOME
+					MainActivity.this.finish();
+				}
+			});
+
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			// show alert
+			alertDialog.show();
+
+
 		}
 
 		// Track app opens.
 		ParseAnalytics.trackAppOpened(getIntent());
-				
+
 		// cria/requisita uma nova localiza√ß√£o global
 		locationRequest = LocationRequest.create();
 
@@ -224,7 +228,7 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 
 		// seta o intervalo de 'teto' pra um minuto
 		locationRequest
-				.setFastestInterval(FAST_INTERVAL_CEILING_IN_MILLISECONDS);
+		.setFastestInterval(FAST_INTERVAL_CEILING_IN_MILLISECONDS);
 
 		// cria um novo location client
 		locationClient = new LocationClient(this, this, this);
@@ -244,7 +248,7 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 				query.orderByDescending("createdAt");
 				query.whereWithinKilometers("location",
 						geoPointFromLocation(myLoc), radius * METERS_PER_FEET
-								/ METERS_PER_KILOMETER);
+						/ METERS_PER_KILOMETER);
 				query.setLimit(MAX_POST_SEARCH_RESULTS);
 				return query;
 			}
@@ -290,7 +294,7 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 						CameraUpdateFactory.newLatLng(new LatLng(item
 								.getLocation().getLatitude(), item
 								.getLocation().getLongitude())),
-						new CancelableCallback() {
+								new CancelableCallback() {
 							public void onFinish() {
 								Marker marker = mapMarkers.get(item
 										.getObjectId());
@@ -340,11 +344,11 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 				myPointLoc = geoPointFromLocation(myLoc); // seta a variavei estatica que vai ser vista na classe de registrar ocorrencia.
 				//doListQuery();							 mudar isso depois (static aqui nao seria uma boa pratica)	
 				//doMapQuery();
-				
+
 				// chama a activity que cuida do cadastro da ocorrencia.
 				startActivity(new Intent(MainActivity.this, OccurrenceTypeActivity.class));
-				
-			
+
+
 			}
 		});
 	}
@@ -443,7 +447,7 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 
 				break;
 
-			// se alguma outro resultado foi retornado pelo Google Play services
+				// se alguma outro resultado foi retornado pelo Google Play services
 			default:
 				if (Application.APPDEBUG) {
 					// Log do resultado
@@ -570,21 +574,23 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 		lastLocation = location;
 		LatLng myLatLng = new LatLng(location.getLatitude(),
 				location.getLongitude());
+
+		// atualiza o indicador do raio do mapa
+
+		updateCircle(myLatLng);
+
 		if (!hasSetUpInitialLocation) {
-			// Zoom pra localiza√ß√£o atual
+
+			//move mapa - falta testar em movimentaÁ„o
 			CameraUpdate center = CameraUpdateFactory.newLatLng(myLatLng);
 			map.getMap().moveCamera(center);
+			// Zoom pra localiza√ß√£o atual			
 			updateZoom(myLatLng);
+
 			hasSetUpInitialLocation = true;
 		}
-		
-		//move mapa - falta testar em movimentaÁ„o
-		
-		
-		
-		// atualiza o indicador do raio do mapa
-		
-		updateCircle(myLatLng);
+
+
 		doMapQuery();
 		doListQuery();
 	}
@@ -686,9 +692,9 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 					Marker oldMarker = mapMarkers.get(post.getObjectId());
 					// seta a localiza√ß√£o do pino
 					MarkerOptions markerOpts = new MarkerOptions()
-							.position(new LatLng(post.getLocation()
-									.getLatitude(), post.getLocation()
-									.getLongitude()));
+					.position(new LatLng(post.getLocation()
+							.getLatitude(), post.getLocation()
+							.getLongitude()));
 					// seta as propriedades do pino (marker) baseado no raio que
 					// foi definido
 					if (post.getLocation().distanceInKilometersTo(myPoint) > radius
@@ -710,8 +716,8 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 						markerOpts = markerOpts
 								.title(getResources().getString(
 										R.string.post_out_of_range))
-								.icon(BitmapDescriptorFactory
-										.fromResource(R.drawable.markeroutros));
+										.icon(BitmapDescriptorFactory
+												.fromResource(R.drawable.markeroutros));
 					} else {
 						// verifica se tem algum pino no range
 						if (oldMarker != null) {
@@ -724,17 +730,17 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 								oldMarker.remove();
 							}
 						}
-						
-						
+
+
 						// mostra um pino verde pra uma ocorr√™ncia que foi
 						// colocada pelo usu√°rio
-						
+
 						markerOpts = markerOpts
 								.title(post.getTipo())
 								.snippet(post.getText())
 								.icon(BitmapDescriptorFactory
 										.fromResource(R.drawable.markerraioazul));
-										//.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+						//.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
 					}
 					// adiciona um novo pino
@@ -804,7 +810,7 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 				Map.Entry tuple = (Map.Entry) it.next();
 				Marker marker = (Marker) tuple.getValue();
 				occLat = marker.getPosition().latitude; // pega a lat e lng da
-														// ocorrencia.
+				// ocorrencia.
 				occLng = marker.getPosition().longitude;
 				// compara se a distancia entre o ponto atual e cada ocorrencia
 				// eh
@@ -822,11 +828,11 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 						alreadyAlerted.add((String) tuple.getKey());
 						if (countOcc > numMaxOcc)
 							break; // definir dps o numero de ocorrencia
-									// considerado
-									// perigoso.
+						// considerado
+						// perigoso.
 						//ou alertar caso exista alguma ocorrÍncia no raio (pensar em exibir apenas aquelas
 						//que foram de ocorrÍncias no turno que o usu·rio est·
-						
+
 					}
 			}
 			// caso as ocorrencias forem maior que um numero min de ocorrencias
@@ -846,12 +852,12 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 				alert.setIcon(R.drawable.ic_alert_dialog);
 				alert.setPositiveButton("Ok",
 						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								mp.pause();
-								vibrator.cancel();
-							}
-						});
+					public void onClick(DialogInterface dialog,
+							int which) {
+						mp.pause();
+						vibrator.cancel();
+					}
+				});
 				alert.setCancelable(false);
 				alert.create().show();
 			}
@@ -875,10 +881,10 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 		}
 		mapCircle.setCenter(myLatLng);
 		mapCircle.setRadius(radius * METERS_PER_FEET); // converte o raio de
-														// p√©s pra metros
+		// p√©s pra metros
 
 		alertChecking(myLatLng);// chama a funcao que testa se deve alertar, e
-								// alerta em caso afirmativo.
+		// alerta em caso afirmativo.
 	}
 
 	/*
@@ -970,29 +976,29 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 
 		return builder.build();
 	}
-//
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate no menu; adiciona itens na actionbar se ela estiver presente.
-//		getMenuInflater().inflate(R.menu.main, menu);
-//
-//		menu.findItem(R.id.action_settings).setOnMenuItemClickListener(
-//				new OnMenuItemClickListener() {
-//					public boolean onMenuItemClick(MenuItem item) {
-//						startActivity(new Intent(MainActivity.this,
-//								SettingsActivity.class));
-//						return true;
-//					}
-//				});
-//		return true;
-//	}
-//	
+	//
+	//	@Override
+	//	public boolean onCreateOptionsMenu(Menu menu) {
+	//		// Inflate no menu; adiciona itens na actionbar se ela estiver presente.
+	//		getMenuInflater().inflate(R.menu.main, menu);
+	//
+	//		menu.findItem(R.id.action_settings).setOnMenuItemClickListener(
+	//				new OnMenuItemClickListener() {
+	//					public boolean onMenuItemClick(MenuItem item) {
+	//						startActivity(new Intent(MainActivity.this,
+	//								SettingsActivity.class));
+	//						return true;
+	//					}
+	//				});
+	//		return true;
+	//	}
+	//	
 	public void settings(View v){
 		startActivity(new Intent(MainActivity.this,
 				SettingsActivity.class));
 	}
 	public void route(View v){
-		
+
 	}
 	/*
 	 * mostra um dialog retornado pelo Google Play services pelo erro na
