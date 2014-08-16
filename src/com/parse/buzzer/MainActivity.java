@@ -268,7 +268,7 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 				TextView usernameView = (TextView) view
 						.findViewById(R.id.usernameView);
 				contentView.setText(occurrence.getText());
-				usernameView.setText(occurrence.getUser().getUsername()); //ToDo: verificar o que isso afeta, eu (Antonio) mudei por conta de um NullPointerException
+				usernameView.setText(""); //ToDo: verificar o que isso afeta, eu (Antonio) mudei por conta de um NullPointerException
 				return view;
 			}
 		};

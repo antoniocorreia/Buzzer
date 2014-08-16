@@ -17,6 +17,10 @@ public class Application extends android.app.Application {
 
 	// Key for saving the search distance preference
 	private static final String KEY_SEARCH_DISTANCE = "searchDistance";
+	
+	private static final String SONORE_ALERT = "sonore_alert";
+	
+	private static final String VIBRATORY_ALERT = "vibratory_alert";
 
 	private static SharedPreferences preferences;
 
@@ -42,5 +46,20 @@ public class Application extends android.app.Application {
 	public static void setSearchDistance(float value) {
 		preferences.edit().putFloat(KEY_SEARCH_DISTANCE, value).commit();
 	}
-
+	
+	public static void setSonoreAlert(boolean value){
+		preferences.edit().putBoolean(SONORE_ALERT, value).commit();
+	}
+	
+	public static void setVibratoryAlert(boolean value){
+		preferences.edit().putBoolean(VIBRATORY_ALERT, value).commit();
+	}
+	
+	public static boolean getSonoreAlert(){
+		return preferences.getBoolean(SONORE_ALERT, false);
+	}
+	
+	public static boolean getVibratoryAlert(){
+		return preferences.getBoolean(VIBRATORY_ALERT, true);
+	}
 }
