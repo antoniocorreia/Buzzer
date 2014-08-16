@@ -161,7 +161,8 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 	MediaPlayer mp;
 	int numMaxOcc = 0; // numero max de ocorrencias dentro de um raio para ser
 	// considerado um alerta.
-
+	private boolean isAlerting = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -564,6 +565,7 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 	 * reporta as atualiza√ß√µes pra a interface do usu√°rio (UI)
 	 */
 	public void onLocationChanged(Location location) {
+		
 		currentLocation = location;
 		if (lastLocation != null
 				&& geoPointFromLocation(location).distanceInKilometersTo(
@@ -592,6 +594,25 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 
 		doMapQuery();
 		doListQuery();
+		
+		centerMapOnMyLocation();
+	}
+	
+	private void centerMapOnMyLocation() {
+//		Toast.makeText(getApplicationContext(), "centrar", 
+//				Toast.LENGTH_LONG).show();
+	    map.getMap().setMyLocationEnabled(true);
+
+	    Location location = map.getMap().getMyLocation();
+
+		LatLng myLocation = null;
+		if (location != null) {
+	        myLocation  = new LatLng(location.getLatitude(),
+	        		location.getLongitude());
+	        map.getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,17));
+	    }
+		
+	    
 	}
 
 	/*
@@ -641,11 +662,12 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 	 * seta query pra atualizar o map view
 	 */
 	private void doMapQuery() {
+		
 		final int myUpdateNumber = ++mostRecentMapUpdate;
 		Location myLoc = (currentLocation == null) ? lastLocation
 				: currentLocation;
 
-		// se a localiza√ß√£o n√£o estiver dispon√≠vel, limpe (tire) qualquer
+		// se a localiza√ß√£o n√£o estiver disponivel, limpe (tire) qualquer
 		// markers (pinos)
 		if (myLoc == null) {
 			cleanUpMarkers(new HashSet<String>());
@@ -681,9 +703,19 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 				}
 				// ocorr√™ncias pra mostrar no mapa
 				Set<String> toKeep = new HashSet<String>();
-
+				String tipo;
+				String comentario;
 				// loop dos resultados da consulta das ocorr√™ncias
 				for (BuzzerOccurrence post : objects) {
+					
+					
+					if (post.getTipo() == null){
+						tipo = " ";
+					}else{
+						tipo = post.getTipo().toString();
+					}
+					comentario = post.getText().toString();
+					
 					// adiciona essa ocorr√™ncia pra lista dos pinos do mapa
 					toKeep.add(post.getObjectId());
 					// verifica se existe um pino pra essa ocorr√™ncia (evitar
@@ -710,11 +742,11 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 								oldMarker.remove();
 							}
 						}
-						// mostra um peino vermelho com um t√≠tulo predefinido e
+						// mostra um pino vermelho com um titulo predefinido e
 						// sem bal√£ozinho
 						markerOpts = markerOpts
-								.title(getResources().getString(
-										R.string.post_out_of_range))
+								.title(tipo)
+								.snippet(comentario)
 										.icon(BitmapDescriptorFactory
 												.fromResource(R.drawable.markeroutros));
 					} else {
@@ -733,10 +765,13 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 
 						// mostra um pino verde pra uma ocorr√™ncia que foi
 						// colocada pelo usu√°rio
-
+						
+						
+						
+						
 						markerOpts = markerOpts
-								.title(post.getTipo())
-								.snippet(post.getText())
+								.title(tipo)
+								.snippet(comentario)
 								.icon(BitmapDescriptorFactory
 										.fromResource(R.drawable.markerraioazul));
 						//.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
@@ -744,7 +779,13 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 					}
 					// adiciona um novo pino
 					Marker marker = map.getMap().addMarker(markerOpts);
-					mapMarkers.put(post.getObjectId(), marker);
+					
+					if(post.getUser() == ParseUser.getCurrentUser()){
+						mapMarkers.put("#"+post.getObjectId(), marker);
+					}else{
+						mapMarkers.put(post.getObjectId(), marker);
+					}
+					
 
 					if (post.getObjectId().equals(selectedObjectId)) {
 						marker.showInfoWindow();
@@ -804,22 +845,22 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 		int countOcc = 0;
 		double occLat = 0;
 		double occLng = 0;
-		if (!mp.isPlaying()) { // caso j· esteja alertando, nao faz nada.
+		Marker marker = null;
+		if (!isAlerting) { // caso j· esteja alertando, nao faz nada.
 			while (it.hasNext()) {
 				Map.Entry tuple = (Map.Entry) it.next();
-				Marker marker = (Marker) tuple.getValue();
+				marker = (Marker) tuple.getValue();
 				occLat = marker.getPosition().latitude; // pega a lat e lng da
-				// ocorrencia.
+														// ocorrencia.
 				occLng = marker.getPosition().longitude;
 				// compara se a distancia entre o ponto atual e cada ocorrencia
 				// eh
 				// menor que o raio, e tambem se a marcacao È uma marcacao feita
 				// pelo proprio usuario.
-				if (marker.getSnippet() != null
-						&& !alreadyAlerted.contains(tuple.getKey()))
-					if (!(marker.getSnippet().equals(ParseUser.getCurrentUser() //ToDo: corrigir isso, pois snippet n„o ser· usu·rio
-							.getUsername()))
-							&& (radius * METERS_PER_FEET) >= haversine(
+				
+				if (!alreadyAlerted.contains(tuple.getKey()))
+					if(!(tuple.getKey().toString().startsWith("#"))
+						&& (radius * METERS_PER_FEET) >= haversine(
 									myLatLng.latitude, myLatLng.longitude,
 									occLat, occLng)) {
 
@@ -827,11 +868,8 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 						alreadyAlerted.add((String) tuple.getKey());
 						if (countOcc > numMaxOcc)
 							break; // definir dps o numero de ocorrencia
-						// considerado
-						// perigoso.
-						//ou alertar caso exista alguma ocorrÍncia no raio (pensar em exibir apenas aquelas
-						//que foram de ocorrÍncias no turno que o usu·rio est·
-
+									// considerado
+									// perigoso.
 					}
 			}
 			// caso as ocorrencias forem maior que um numero min de ocorrencias
@@ -839,32 +877,48 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 			// exibido. Quando o usuario clicar em "ok", o alarme ser·
 			// desligado.
 			if (countOcc > numMaxOcc) {
-				mp.setLooping(false);
-				mp.start();
-				vibrator.cancel();
-				long[] pattern = { 0, 400, 1000 };
-				vibrator.vibrate(pattern, 0);
+				if (Application.getSonoreAlert()) {
+					mp = MediaPlayer.create(MainActivity.this, R.raw.pega);
+					mp.setLooping(false);
+					mp.start();
+				}
 
-				AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-				alert.setMessage("¡rea com "+ countOcc +" ocorrÍncia(s) registrada(s) no ˙ltimo mÍs.");
+				isAlerting = true;
+
+				if (Application.getVibratoryAlert()) {
+					vibrator.cancel();
+					long[] pattern = { 0, 400, 1000 };
+					vibrator.vibrate(pattern, 0);
+				}
+
+				AlertDialog.Builder alert = new AlertDialog.Builder(
+						MainActivity.this);
+				alert.setMessage(marker.getTitle()+marker.getSnippet());
 				alert.setTitle("Fique Alerta!");
 				alert.setIcon(R.drawable.ic_alert_dialog);
 				alert.setPositiveButton("Ok",
 						new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,
-							int which) {
-						mp.pause();
-						vibrator.cancel();
-					}
-				});
+							public void onClick(DialogInterface dialog,
+									int which) {
+								if (Application.getSonoreAlert()) {
+									mp.stop();
+									//mp.release();
+								}
+
+								if (Application.getVibratoryAlert())
+									vibrator.cancel();
+
+								isAlerting = false;
+							}
+						});
 				alert.setCancelable(false);
 				alert.create().show();
 			}
 		}
 	}
-
+	
 	/*
-	 * mostra um c√≠rculo no mapa representadndo o raio de busca (vai servir pra
+	 * mostra um circulo no mapa representadndo o raio de busca (vai servir pra
 	 * entrar na config de onde quer ser alertado)
 	 */
 	private void updateCircle(LatLng myLatLng) {
@@ -901,7 +955,7 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 		CameraPosition cameraPosition = new CameraPosition.Builder()
 	    	.target(myLatLng)      // Sets the center of the map to Mountain View
 	    	.zoom(17)                   // Sets the zoom
-	    	.bearing(90)                // Sets the orientation of the camera to east
+	    	//.bearing(90)                // Sets the orientation of the camera to east
 	    	.tilt(30)                   // Sets the tilt of the camera to 30 degrees
 	    	.build();                   // Creates a CameraPosition from the builder
 		map.getMap().animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));

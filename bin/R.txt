@@ -203,10 +203,11 @@ int drawable lupa 0x7f020069
 int drawable markeroutros 0x7f02006a
 int drawable markerraio 0x7f02006b
 int drawable markerraioazul 0x7f02006c
-int drawable plano 0x7f02006d
-int drawable powered_by_google_dark 0x7f02006e
-int drawable powered_by_google_light 0x7f02006f
-int drawable warning 0x7f020070
+int drawable markerraioazul_usuario_logado 0x7f02006d
+int drawable plano 0x7f02006e
+int drawable powered_by_google_dark 0x7f02006f
+int drawable powered_by_google_light 0x7f020070
+int drawable warning 0x7f020071
 int id RelativeLayout1 0x7f05004b
 int id a0 0x7f050016
 int id a1 0x7f050017

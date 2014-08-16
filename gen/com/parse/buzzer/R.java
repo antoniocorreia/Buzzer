@@ -635,10 +635,11 @@ containing a value of this type.
         public static final int markeroutros=0x7f02006a;
         public static final int markerraio=0x7f02006b;
         public static final int markerraioazul=0x7f02006c;
-        public static final int plano=0x7f02006d;
-        public static final int powered_by_google_dark=0x7f02006e;
-        public static final int powered_by_google_light=0x7f02006f;
-        public static final int warning=0x7f020070;
+        public static final int markerraioazul_usuario_logado=0x7f02006d;
+        public static final int plano=0x7f02006e;
+        public static final int powered_by_google_dark=0x7f02006f;
+        public static final int powered_by_google_light=0x7f020070;
+        public static final int warning=0x7f020071;
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f05004b;
