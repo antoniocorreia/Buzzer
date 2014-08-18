@@ -1,8 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android1="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="300dp"
+    android:background="@drawable/plano"
     android:orientation="vertical" >
-    
 
-</LinearLayout>
+    <!-- <TableLayout -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:stretchColumns="0,1,2" > -->
+    <!-- </TableLayout> -->
+
+    <LinearLayout
+        android1:layout_width="match_parent"
+        android1:layout_height="match_parent"
+        android1:gravity="center|center_vertical"
+        android1:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android1:id="@+id/editTextDestino"
+                android1:layout_width="wrap_content"
+                android1:layout_height="wrap_content"
+                android1:layout_alignParentLeft="true"
+                android1:layout_alignParentRight="true"
+                android1:ems="10"
+                android1:imeOptions="actionSearch" 
+                android1:hint="@string/destino"
+                android1:inputType="text" />
+
+        </RelativeLayout>
+
+        <Button
+            android1:id="@+id/btnGerarRota"
+            android1:layout_width="fill_parent"
+            android1:layout_height="wrap_content"
+            android1:text="@string/rota" />
+    </LinearLayout>
+
+    <TableRow
+        android1:id="@+id/tableRow1"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:layout_alignParentTop="true"
+        android1:layout_centerHorizontal="true"
+        android1:stretchColumns="0,1" >
+
+        <ImageButton
+            android1:id="@+id/carroButton"
+            android1:layout_width="wrap_content"
+            android1:layout_height="wrap_content"
+            android1:background="@drawable/ic_rotas_carro_pressed"
+            android1:contentDescription="@string/ocurrenceBtn_contentDescription"
+            android1:onClick="selecionarOpcao" />
+
+        <ImageButton
+            android1:id="@+id/apeButton"
+            android1:layout_width="wrap_content"
+            android1:layout_height="wrap_content"
+            android1:background="@drawable/ic_rota_ape"
+            android1:contentDescription="@string/ocurrenceBtn_contentDescription"
+            android1:onClick="selecionarOpcao" />
+    </TableRow>
+
+</RelativeLayout>

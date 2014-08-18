@@ -46,6 +46,7 @@ public class OccurrenceDetail extends Activity {
 	private int min;
 	double longi, lat; // ajudar na localizacao
 	private final BuzzerOccurrence occurrence = new BuzzerOccurrence(); // responsavel
+	private Address address = null;
 	// pela
 	// ocorrencia
 	// a ser
@@ -137,7 +138,12 @@ public class OccurrenceDetail extends Activity {
 			botaoHora = (Button) findViewById(R.id.hora);
 			occurrence.setHora(botaoHora.getText().toString());
 			
-						
+			//address
+			String t = address.getAddressLine(0);
+			String[] parts = t.split(",");
+			String logradouro = parts[0];
+			occurrence.setAddress(logradouro);
+			
 			ParseACL acl = new ParseACL();
 			// permite public read access
 			acl.setPublicReadAccess(true);
@@ -181,7 +187,7 @@ public class OccurrenceDetail extends Activity {
 	// seta a hora,data, e localizacao para a atual.
 	public void setAtual() throws IOException {
 		String temp = "";
-		Address address = null;
+		address = null;
 		c = Calendar.getInstance();
 		mYear = c.get(Calendar.YEAR);
 		mMonth = c.get(Calendar.MONTH);
@@ -242,7 +248,7 @@ public class OccurrenceDetail extends Activity {
 	public void getEnd(View view) {
 		if (!addresses.isEmpty()) {
 			String temp = "";
-			Address address = null;
+			address = null;
 			if (view.getId() == R.id.a0)
 				address = addresses.get(0);
 			else if (view.getId() == R.id.a1)

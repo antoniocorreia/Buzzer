@@ -12,7 +12,7 @@
     tools:context=".SettingsActivity" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewOrigem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -25,8 +25,8 @@
         android:id="@+id/searchDistanceGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1" >
+        android:layout_alignLeft="@+id/textViewOrigem"
+        android:layout_below="@+id/textViewOrigem" >
 
         <RadioButton
             android:id="@+id/feet250Button"

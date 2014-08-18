@@ -70,4 +70,10 @@
 	
 	<!-- activity_lista_lugares -->
 	<string name="warning">Nenhum lugar com essa descrição</string>
+	
+	<!-- activity_rotas -->
+	<string name="rota">Gerar rota</string>
+	<string name="origem">Digitar ponto de partida</string>
+	<string name="destino">Digitar destino</string>
+	<string name="ponto_partida">Utilizar minha localização como ponto de partida</string>
 </resources>

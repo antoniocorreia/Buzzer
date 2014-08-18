@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:onClick="getEnd"
-        android:textColor="#FFFFFF"
-        android:text="@string/warning"
+   	    android:text="@string/warning"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView

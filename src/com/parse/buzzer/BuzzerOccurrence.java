@@ -56,4 +56,10 @@ public class BuzzerOccurrence extends ParseObject {
 	    return ParseQuery.getQuery(BuzzerOccurrence.class);
 	  }
 
+	public void setAddress(String logradouro) {
+		// TODO Auto-generated method stub
+		put("address",logradouro);
+		
+	}
+
 }

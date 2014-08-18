@@ -893,7 +893,7 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 
 				AlertDialog.Builder alert = new AlertDialog.Builder(
 						MainActivity.this);
-				alert.setMessage(marker.getTitle()+marker.getSnippet());
+				alert.setMessage(marker.getTitle()+ " " + marker.getSnippet()+ " (no último mês).");
 				alert.setTitle("Fique Alerta!");
 				alert.setIcon(R.drawable.ic_alert_dialog);
 				alert.setPositiveButton("Ok",
@@ -1060,6 +1060,16 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 				SettingsActivity.class));
 	}
 	public void route(View v){
+		Location myLoc = (currentLocation == null) ? lastLocation
+				: currentLocation;
+		if (myLoc == null) {
+			Toast.makeText(
+					MainActivity.this,
+					"Por favor, tente novamente quando sua localização aparecer no mapa.",
+					Toast.LENGTH_LONG).show();
+			return;
+		}
+		myPointLoc = geoPointFromLocation(myLoc);
 		startActivity(new Intent(MainActivity.this,RouteActivity.class));
 	}
 	/*
