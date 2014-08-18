@@ -40,6 +40,7 @@
             android1:id="@+id/btnGerarRota"
             android1:layout_width="fill_parent"
             android1:layout_height="wrap_content"
+            android1:onClick="teste"
             android1:text="@string/rota" />
     </LinearLayout>
 

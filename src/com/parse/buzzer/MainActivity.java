@@ -119,7 +119,7 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 	 * outras váriaveis que foram necessárias
 	 */
 	// Map fragment
-	private SupportMapFragment map;
+	static SupportMapFragment map;
 
 	// representa o círculo ao redor do mapa
 	private Circle mapCircle;
