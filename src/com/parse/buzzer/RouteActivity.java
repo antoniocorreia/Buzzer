@@ -173,7 +173,6 @@ public class RouteActivity extends Activity{
 			gerarRota(view);
 		} else {
 			setContentView(R.layout.activity_routes);
-			
 		}
 	}
 	public void procuraLugar() throws IOException {

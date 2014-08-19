@@ -352,6 +352,7 @@ int layout com_facebook_usersettingsfragment 0x7f030018
 int menu main 0x7f0b0000
 int raw andar 0x7f040000
 int raw pega 0x7f040001
+int raw pega_old 0x7f040002
 int string action_forgot_password 0x7f060073
 int string action_settings 0x7f060034
 int string action_sign_in_register 0x7f060071
