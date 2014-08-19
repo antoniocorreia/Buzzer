@@ -112,10 +112,14 @@ public class OccurrenceDetail extends Activity {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				Toast.makeText(getApplicationContext(), "Ops, verifique sua conexão com a internet. O Buzzer não conseguiu estabelecer conexão com o servidor.", Toast.LENGTH_LONG).show();
+				finish();
 			}	
 		}
 
 	}
+	
+	
 
 	// a funcao cadastra a ocorrencia no parse, e retorna para a tela principal
 	public void returnToMain(View view) throws java.text.ParseException {
@@ -218,6 +222,10 @@ public class OccurrenceDetail extends Activity {
 			}
 		}
 		endereco.setText(temp);
+		//System.out.println(temp+"teste");
+		//if (temp == ""){
+			
+		//}
 	}
 
 	private void atualizaHoraData(){

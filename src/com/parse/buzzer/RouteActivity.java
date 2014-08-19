@@ -18,19 +18,23 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RouteActivity extends Activity{
 	ImageButton carro;
@@ -63,6 +67,8 @@ public class RouteActivity extends Activity{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Toast.makeText(getApplicationContext(), "Ops, verifique sua conexão com a internet. O Buzzer não conseguiu estabelecer conexão com o servidor.", Toast.LENGTH_LONG).show();
+			finish();
 		}	
 		
 		EditText destino = (EditText) findViewById(R.id.editTextDestino);
@@ -71,12 +77,19 @@ public class RouteActivity extends Activity{
 		    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 		        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 		            try {
+		            	InputMethodManager inputManager = (InputMethodManager)
+                                getSystemService(Context.INPUT_METHOD_SERVICE); 
+
+		            	inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                                   InputMethodManager.HIDE_NOT_ALWAYS);
 						procuraLugar();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+						Toast.makeText(getApplicationContext(), "Ops, verifique sua conexão com a internet. O Buzzer não conseguiu estabelecer conexão com o servidor.", Toast.LENGTH_LONG).show();
+						finish();
 					}
-		            return true;
+		            return false;
 		        }
 		        return false;
 		    }
@@ -86,6 +99,8 @@ public class RouteActivity extends Activity{
 	
 
 	public void setAtual() throws IOException {
+		 
+		
 		String temp = "";
 		Address address = null;
 
@@ -141,7 +156,17 @@ public class RouteActivity extends Activity{
 
 	}
 	
+//	private void hideSoftKeyBoard() {
+//	    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//
+//	    if(imm.isAcceptingText()) { // verify if the soft keyboard is open                      
+//	        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+//	    }
+//	}
+	
 	public void getEnd(View view) {
+		
+		
 		if (!addresses.isEmpty()) {
 			String temp = "";
 			Address address = null;
@@ -170,7 +195,9 @@ public class RouteActivity extends Activity{
 			}
 			//endereco.setText(temp);
 			PONTO2 = new LatLng(address.getLatitude(),address.getLongitude());
+			
 			gerarRota(view);
+			
 		} else {
 			setContentView(R.layout.activity_routes);
 		}
@@ -205,16 +232,26 @@ public class RouteActivity extends Activity{
 	}
 	
 	public void teste(View view){
+		InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE); 
+
+    	inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                   InputMethodManager.HIDE_NOT_ALWAYS);
 		try {
 			procuraLugar();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Toast.makeText(getApplicationContext(), "Ops, verifique sua conexão com a internet. O Buzzer não conseguiu estabelecer conexão com o servidor.", Toast.LENGTH_LONG).show();
+			finish();
 		}
 	}
 	
 	public void gerarRota(View view) {
-		
+		//if (PONTO1 == null || PONTO2 == null){
+//			Toast.makeText(getApplicationContext(), "Ops, verifique sua conexão com a internet. O Buzzer não conseguiu estabelecer conexão com o servidor.", Toast.LENGTH_LONG).show();
+//			finish();
+		//}
 		
 		/** Removendo a rota e os pontos iniciais e finais da rota anterior */
 		if (polyLine != null) {
@@ -312,10 +349,14 @@ public class RouteActivity extends Activity{
 				routes = parser.parse(jObject);
 			} catch (Exception e) {
 				e.printStackTrace();
+				Toast.makeText(getApplicationContext(), "Ops, verifique sua conexão com a internet. O Buzzer não conseguiu estabelecer conexão com o servidor.", Toast.LENGTH_LONG).show();
+				finish();
 			}
 			return routes;
 		}
 
+		
+		
 		@Override
 		protected void onPostExecute(List<List<HashMap<String, String>>> routes) {
 			ArrayList<LatLng> points = null;
@@ -337,6 +378,7 @@ public class RouteActivity extends Activity{
 					polyLine = googleMap.addPolyline(polyLineOptions);
 					RouteActivity.this.progressDialog.dismiss();
 					mCallBack.finish();
+					
 		}
 	}
 

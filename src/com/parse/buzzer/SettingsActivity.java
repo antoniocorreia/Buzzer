@@ -71,6 +71,7 @@ public class SettingsActivity extends Activity implements CompoundButton.OnCheck
 		// setup de logout
 		((Button) findViewById(R.id.voltarButton)).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				finish();
 				// chama o m√©todo do Parse de log out
 				//ParseUser.logOut();
 				// inicia a intent pra dispatch activity
@@ -78,9 +79,9 @@ public class SettingsActivity extends Activity implements CompoundButton.OnCheck
 				// limpa a lista que guarda as ocorrencias j· alertadas
 				//MainActivity.alreadyAlerted.clear();
 
-				Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intent);
+				//Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+				//intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+				//startActivity(intent);
 			}
 		});
 

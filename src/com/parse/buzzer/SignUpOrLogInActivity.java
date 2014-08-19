@@ -126,8 +126,8 @@ public class SignUpOrLogInActivity extends Activity{
 	private void onLoginButtonClicked() {
 		SignUpOrLogInActivity.this.progressDialog = ProgressDialog.show(
 				SignUpOrLogInActivity.this, "", "Entrando...", true);
-		List<String> permissions = Arrays.asList("basic_info","user_birthday", "user_location");
-		ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
+		//List<String> permissions = Arrays.asList("public_profile");
+		ParseFacebookUtils.logIn(null, this, new LogInCallback() {
 			@Override
 			public void done(ParseUser user, ParseException err) {
 				SignUpOrLogInActivity.this.progressDialog.dismiss();

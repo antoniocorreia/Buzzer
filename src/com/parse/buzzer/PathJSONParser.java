@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -55,7 +56,7 @@ public class PathJSONParser {
                     jSteps = ((JSONObject) jLegs.get(j)).getJSONArray("steps");
                     jDuration = ((JSONObject) jLegs.get(j)).getJSONObject("duration");
                     duracaoAux[i] += jDuration.getInt("value");
-                    System.out.println(duracaoAux);
+                    //System.out.println(duracaoAux);
 
                     /** Percorrendo todos os passos (um passo eh uma instrucao do google, ex: "siga 200m na rua X e entao vire na rua Y" */
                     for (int k = 0; k < jSteps.length(); k++) {
@@ -118,12 +119,12 @@ public class PathJSONParser {
                             public void done(int count, ParseException e) {
                                 if (e == null) {
                                     contaAux[ind] += count;
-                                    System.out.println(contaAux[ind]);
+                                    //System.out.println(contaAux[ind]);
                                     //flag = true;
                                     //contaThreads.getAndIncrement();
 
                                 } else {
-                                    System.out.println("ERRO" + " nas ocorrencias: " + e.getMessage());
+                                    //System.out.println("ERRO" + " nas ocorrencias: " + e.getMessage());
                                     //flag = true;
                                     //contaThreads.getAndIncrement();
                                 }
@@ -185,17 +186,18 @@ public class PathJSONParser {
                     rotaEscolhida = i;
                     contaOcorrencias = contaAux[i];
                     duracaoPercurso = duracaoAux[i];
-                    System.out.println("Eliminando rota " + (i-1));
+                    //System.out.println("Eliminando rota " + (i-1));
                 } else {
                     if (duracaoAux[i] < duracaoPercurso) {
                         rotaEscolhida = i;
                         duracaoPercurso = duracaoAux[i];
                         contaOcorrencias = contaAux[i];
-                        System.out.println("Escolhi a rota " + i + " ao inves da " + (i-1));
+                        //System.out.println("Escolhi a rota " + i + " ao inves da " + (i-1));
                     } 
                 }
             } 
-            System.out.println(rotaEscolhida + " " + contaOcorrencias);
+            //Toast.makeText(ct, "Rota possui "+rotaEscolhida+ " ocorrência(s). Tempo estimado: " +duracaoPercurso+" min", Toast.LENGTH_LONG).show();
+            //System.out.println(rotaEscolhida + " " + contaOcorrencias);
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (Exception e) {
